@@ -5,6 +5,6 @@ namespace DotnetDemo.Service.Interfaces
 {
     public interface IUserService : IBaseService<User>
     {
-        LoginResponse Authenticate(User user);
+        LoginResponse Authenticate(LoginPayload payload);
     }
 }

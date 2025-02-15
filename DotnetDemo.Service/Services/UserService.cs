@@ -43,7 +43,7 @@ namespace DotnetDemo.Service.Services
             return base.Update(model);
         }
 
-        public LoginResponse Authenticate(User payload)
+        public LoginResponse Authenticate(LoginPayload payload)
         {
             var _user = Get(u => u.Username == payload.Username)
                 .FirstOrDefault() ?? throw new Exception("Usuário não existe!");

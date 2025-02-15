@@ -10,22 +10,15 @@ using System.Net;
 
 namespace DotnetDemo.Controllers
 {
-    public class UserController : BaseController<User>
+    public class UserController(IUserService service, ILogger<UserController> loger) : BaseController<User>(service, loger)
     {
-        private new readonly IUserService _service;
-
-        public UserController(IUserService service, ILogger<UserController> loger) : base(service, loger)
-        {
-            _service = service;
-        }
-
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public IActionResult Login([FromBody] User payload)
+        public IActionResult Login([FromBody] LoginPayload payload)
         {
             try
             {
-                var response = _service.Authenticate(payload);
+                var response = service.Authenticate(payload);
                 return Ok(response);
             }
             catch (Exception err)
