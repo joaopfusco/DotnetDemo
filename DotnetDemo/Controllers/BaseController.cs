@@ -15,12 +15,15 @@ namespace DotnetDemo.Controllers
     [Route("api/[controller]")]
     public class BaseController<TModel>(IBaseService<TModel> service, ILogger logger) : Controller where TModel : BaseModel
     {
+        protected readonly IBaseService<TModel> _service = service;
+        protected readonly ILogger _logger = logger;
+
         [HttpGet]
         public virtual IActionResult GetAll()
         {
             return TryExecute(() =>
             {
-                return Ok(service.Get());
+                return Ok(_service.Get());
             });
         }
 
@@ -29,7 +32,7 @@ namespace DotnetDemo.Controllers
         {
             return TryExecute(() =>
             {
-                return Ok(service.Get(id).FirstOrDefault());
+                return Ok(_service.Get(id).FirstOrDefault());
             });
         }
 
@@ -38,7 +41,7 @@ namespace DotnetDemo.Controllers
         {
             return TryExecute(() =>
             {
-                var query = service.Get();
+                var query = _service.Get();
                 var queryfilter = queryOptions.Filter?.ApplyTo(query, new ODataQuerySettings()) ?? query;
 
                 return Ok(new
@@ -58,7 +61,7 @@ namespace DotnetDemo.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                service.Insert(model);
+                _service.Insert(model);
                 return Ok(model);
             });
         }
@@ -72,7 +75,7 @@ namespace DotnetDemo.Controllers
                     return BadRequest(ModelState);
 
                 model.Id = id;
-                service.Update(model);
+                _service.Update(model);
                 return Ok(model);
             });
         }
@@ -85,7 +88,7 @@ namespace DotnetDemo.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                service.Delete(id);
+                _service.Delete(id);
                 return Ok(id);
             });
         }
@@ -99,7 +102,7 @@ namespace DotnetDemo.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, ex.Message, ex.InnerException);
+                _logger.LogError(ex, ex.Message, ex.InnerException);
                 return BadRequest(ex);
             }
         }

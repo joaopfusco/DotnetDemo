@@ -5,14 +5,9 @@ using System.Linq.Expressions;
 
 namespace DotnetDemo.Service.Services
 {
-    public class BaseService<TModel> : IBaseService<TModel> where TModel : BaseModel
+    public class BaseService<TModel>(AppDbContext db) : IBaseService<TModel> where TModel : BaseModel
     {
-        public AppDbContext _db;
-
-        public BaseService(AppDbContext db)
-        {
-            _db = db;
-        }
+        protected readonly AppDbContext _db = db;
 
         public IQueryable<TModel> Get(Expression<Func<TModel, bool>>? predicate = null)
         {

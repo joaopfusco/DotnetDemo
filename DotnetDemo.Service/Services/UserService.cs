@@ -15,16 +15,10 @@ using DotnetDemo.Domain.DTOs;
 
 namespace DotnetDemo.Service.Services
 {
-    public class UserService : BaseService<User>, IUserService
+    public class UserService(AppDbContext db, IConfiguration configuration) : BaseService<User>(db), IUserService
     {
-        private readonly IConfiguration _configuration;
-        private readonly PasswordHasher<User> _passwordHasher;
-
-        public UserService(AppDbContext db, IConfiguration configuration) : base(db)
-        {
-            _configuration = configuration;
-            _passwordHasher = new PasswordHasher<User>();
-        }
+        private readonly IConfiguration _configuration = configuration;
+        private readonly PasswordHasher<User> _passwordHasher = new();
 
         private string HashedPassword(User user)
         {
