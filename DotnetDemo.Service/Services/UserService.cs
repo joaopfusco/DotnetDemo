@@ -45,8 +45,7 @@ namespace DotnetDemo.Service.Services
 
         public LoginResponse Authenticate(User payload)
         {
-            var _user = Get()
-                .Where(u => u.Username == payload.Username)
+            var _user = Get(u => u.Username == payload.Username)
                 .FirstOrDefault() ?? throw new Exception("Usuário não existe!");
 
             var verificationResult = _passwordHasher.VerifyHashedPassword(_user, _user.Password, payload.Password);

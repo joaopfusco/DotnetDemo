@@ -8,7 +8,7 @@ namespace DotnetDemo.Service.Interfaces
 {
     public interface IBaseService<TModel> where TModel : BaseModel
     {
-        IQueryable<TModel> Get();
+        IQueryable<TModel> Get(Expression<Func<TModel, bool>>? predicate = null);
 
         IQueryable<TModel> Get(int id);
 
