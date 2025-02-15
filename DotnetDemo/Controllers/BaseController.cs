@@ -13,57 +13,42 @@ namespace DotnetDemo.Controllers
 #endif
     [ApiController]
     [Route("api/[controller]")]
-    public class BaseController<TModel> : Controller where TModel : BaseModel
+    public class BaseController<TModel>(IBaseService<TModel> service, ILogger logger) : Controller where TModel : BaseModel
     {
-        protected TModel _model;
-        protected readonly IBaseService<TModel> _service;
-        protected readonly ILogger _logger;
-
-        public BaseController(IBaseService<TModel> service, ILogger loger)
-        {
-            _service = service;
-            _logger = loger;
-        }
-
         [HttpGet]
         public virtual IActionResult GetAll()
         {
-            return Ok(_service.Get());
+            return TryExecute(() =>
+            {
+                return Ok(service.Get());
+            });
         }
 
         [HttpGet("{id}")]
         public virtual IActionResult GetById(int id)
         {
-            return Ok(_service.Get(id).FirstOrDefault());
+            return TryExecute(() =>
+            {
+                return Ok(service.Get(id).FirstOrDefault());
+            });
         }
 
         [HttpGet("odata")]
         public virtual IActionResult Get(ODataQueryOptions<TModel> queryOptions)
         {
-            var query = _service.Get();
-
-            var queryfilter = queryOptions.Filter?.ApplyTo(query, new ODataQuerySettings()) ?? query;
-
-            return Ok(new
+            return TryExecute(() =>
             {
-                _count = queryOptions.Count?.GetEntityCount(queryfilter),
-                value = queryOptions.ApplyTo(query)
+                var query = service.Get();
+                var queryfilter = queryOptions.Filter?.ApplyTo(query, new ODataQuerySettings()) ?? query;
+
+                return Ok(new
+                {
+                    _count = queryOptions.Count?.GetEntityCount(queryfilter),
+                    value = queryOptions.ApplyTo(query)
+                });
             });
         }
 
-        [NonAction]
-        protected virtual IActionResult TryExecute(Func<IActionResult> execute)
-        {
-            try
-            {
-                return execute();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                return StatusCode(500, ex);
-            }
-        }
 
         [HttpPost]
         public virtual IActionResult Post([FromBody] TModel model)
@@ -73,7 +58,7 @@ namespace DotnetDemo.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _service.Insert(model);
+                service.Insert(model);
                 return Ok(model);
             });
         }
@@ -87,7 +72,7 @@ namespace DotnetDemo.Controllers
                     return BadRequest(ModelState);
 
                 model.Id = id;
-                _service.Update(model);
+                service.Update(model);
                 return Ok(model);
             });
         }
@@ -100,9 +85,23 @@ namespace DotnetDemo.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _service.Delete(id);
+                service.Delete(id);
                 return Ok(id);
             });
+        }
+
+        [NonAction]
+        protected virtual IActionResult TryExecute(Func<IActionResult> execute)
+        {
+            try
+            {
+                return execute();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message, ex.InnerException);
+                return BadRequest(ex);
+            }
         }
     }
 }
