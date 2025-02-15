@@ -58,9 +58,9 @@ namespace DotnetDemo.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "AQAAAAIAAYagAAAAEGtyGz/jN4UUf8WQSi6jVwrCr3340e0bZwwITCuGtLNnZXbqdMLaUrF7/WHQ5z8mNg==",
-                            UpdatedAt = new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Password = "AQAAAAIAAYagAAAAEE4gBnU4jghzDawgaFiP7GGEbROQxGfRmFTLcaYg4z3DE+gwJ1vcaRowkSNCig5veg==",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Username = "root"
                         });
                 });

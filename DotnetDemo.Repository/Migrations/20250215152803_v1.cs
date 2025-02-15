@@ -31,8 +31,8 @@ namespace DotnetDemo.Repository.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "Id", "CreatedAt", "Password", "UpdatedAt", "Username" },
-                values: new object[] { 1, new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "AQAAAAIAAYagAAAAEGtyGz/jN4UUf8WQSi6jVwrCr3340e0bZwwITCuGtLNnZXbqdMLaUrF7/WHQ5z8mNg==", new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "root" });
+                columns: new[] { "Id", "Password", "Username" },
+                values: new object[] { 1, "AQAAAAIAAYagAAAAEE4gBnU4jghzDawgaFiP7GGEbROQxGfRmFTLcaYg4z3DE+gwJ1vcaRowkSNCig5veg==", "root" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_Username",
