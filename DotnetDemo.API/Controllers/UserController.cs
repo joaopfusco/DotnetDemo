@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace DotnetDemo.Controllers
+namespace DotnetDemo.API.Controllers
 {
     public class UserController(IUserService service, ILogger<UserController> logger) : BaseController<User>(service, logger)
     {

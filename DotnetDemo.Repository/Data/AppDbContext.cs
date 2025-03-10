@@ -7,17 +7,11 @@ using DotnetDemo.Repository.Mappings;
 
 namespace DotnetDemo.Repository.Data
 {
-    public partial class AppDbContext : DbContext
+    public partial class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : DbContext(options)
     {
-        private readonly string _connectionString;
+        private readonly string _connectionString = GetConnectionString(configuration);
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
-        {
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-            _connectionString = GetConnectionString(configuration);
-        }
-
-        private string GetConnectionString(IConfiguration configuration)
+        private static string GetConnectionString(IConfiguration configuration)
         {
             var envConnection = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
             var appsettingsConnection = configuration.GetConnectionString("DefaultConnection");
@@ -30,8 +24,6 @@ namespace DotnetDemo.Repository.Data
 
             throw new Exception("Não há ConnectionString.");
         }
-
-        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

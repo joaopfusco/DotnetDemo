@@ -1,3 +1,4 @@
+using DotnetDemo.API.Extensions;
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace DotnetDemo.Controllers
+namespace DotnetDemo.API.Controllers
 {
 #if !DEBUG
     [Authorize]
