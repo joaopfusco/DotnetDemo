@@ -55,7 +55,7 @@ namespace DotnetDemo.Repository.Data
             var entries = ChangeTracker.Entries<BaseModel>()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             foreach (var entry in entries)
             {
                 var entity = entry.Entity;
