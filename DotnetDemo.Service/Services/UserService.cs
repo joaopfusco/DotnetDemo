@@ -52,7 +52,8 @@ namespace DotnetDemo.Service.Services
                 new Claim(ClaimTypes.Name, _user.Username),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Key"]));
+            var keyString = _configuration["Key"] ?? throw new Exception("Key not found in configuration");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
