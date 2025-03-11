@@ -51,10 +51,6 @@ builder.Services
     {
         opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-    })
-    .AddOData(options =>
-    {
-        options.Select().Filter().OrderBy().Expand().Count().SetMaxTop(100);
     });
 
 builder.Services.AddEndpointsApiExplorer();
