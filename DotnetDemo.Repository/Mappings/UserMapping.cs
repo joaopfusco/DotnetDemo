@@ -17,20 +17,11 @@ namespace DotnetDemo.Repository.Mappings
 
             builder.HasIndex(x => new { x.Username }).IsUnique();
 
-            User user = new()
-            {
-                Username = "root",
-                Password = "root"
-            };
-
-            PasswordHasher<User> _passwordHasher = new();
-            string password = _passwordHasher.HashPassword(user, user.Password);
-
             builder.HasData(new User
             {
                 Id = 1,
-                Username = user.Username,
-                Password = password,
+                Username = "root",
+                Password = "AQAAAAIAAYagAAAAEP8PG6clj/SvgE7ELzmTICj861gpD8wEbPAjmyep0KrHAqGyy9rqn+UrVlFlci1DAQ==",
             });
 
             base.Configure(builder);
