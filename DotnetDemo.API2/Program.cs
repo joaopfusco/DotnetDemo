@@ -1,4 +1,4 @@
-using DotnetDemo.API.Extensions;
+using DotnetDemo.API2.Extensions;
 using DotnetDemo.Repository.Data;
 using DotnetDemo.Service.Interfaces;
 using DotnetDemo.Service.Services;
@@ -21,13 +21,12 @@ builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.SaveToken = true;
+        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+        options.MetadataAddress = builder.Configuration["Keycloak:MetadataAddress"];
+        options.Audience = builder.Configuration["Keycloak:Audience"];
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Key"])),
+            ValidIssuer = builder.Configuration["Keycloak:ValidIssuer"],
         };
     });
 
@@ -86,7 +85,10 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.OAuthClientId(builder.Configuration["Keycloak:ClientId"]);
+    });
 }
 
 app.UseCors("CorsPolicy");

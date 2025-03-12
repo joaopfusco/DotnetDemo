@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace DotnetDemo.API.Extensions
+namespace DotnetDemo.API2.Extensions
 {
     internal static class SwaggerGenExtensions
     {
@@ -12,13 +12,20 @@ namespace DotnetDemo.API.Extensions
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                c.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
                 {
-                    Description = "`Token apenas!`",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    Scheme = "Bearer"
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        Implicit = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri(configuration["Keycloak:AuthorizationUrl"]),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                { "openid", "OpenID Connect scope" }
+                            }
+                        }
+                    }
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -27,9 +34,12 @@ namespace DotnetDemo.API.Extensions
                         {
                             Reference = new OpenApiReference
                             {
-                                Id = "Bearer",
+                                Id = "OAuth2",
                                 Type = ReferenceType.SecurityScheme,
-                            }
+                            },
+                            In = ParameterLocation.Header,
+                            Name = "Bearer",
+                            Scheme = "Bearer"
                         },
                         []
                     }
