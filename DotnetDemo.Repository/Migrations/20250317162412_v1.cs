@@ -13,7 +13,7 @@ namespace DotnetDemo.Repository.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -26,17 +26,17 @@ namespace DotnetDemo.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "User",
+                table: "Users",
                 columns: new[] { "Id", "Password", "Username" },
                 values: new object[] { 1, "AQAAAAIAAYagAAAAEP8PG6clj/SvgE7ELzmTICj861gpD8wEbPAjmyep0KrHAqGyy9rqn+UrVlFlci1DAQ==", "root" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_Username",
-                table: "User",
+                name: "IX_Users_Username",
+                table: "Users",
                 column: "Username",
                 unique: true);
         }
@@ -45,7 +45,7 @@ namespace DotnetDemo.Repository.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }

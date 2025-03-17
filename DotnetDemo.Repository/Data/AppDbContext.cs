@@ -25,6 +25,8 @@ namespace DotnetDemo.Repository.Data
             throw new Exception("Não há ConnectionString.");
         }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMapping());
