@@ -67,7 +67,7 @@ namespace DotnetDemo.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual IActionResult Put(int id, TModel model)
+        public virtual IActionResult Put(int id, [FromBody] TModel model)
         {
             return TryExecute(() =>
             {
