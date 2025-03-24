@@ -20,6 +20,7 @@ namespace DotnetDemo.API2.Extensions
                         Implicit = new OpenApiOAuthFlow
                         {
                             AuthorizationUrl = new Uri(configuration["Keycloak:AuthorizationUrl"]),
+                            TokenUrl = new Uri(configuration["Keycloak:TokenUrl"]),
                             Scopes = new Dictionary<string, string>
                             {
                                 { "openid", "OpenID Connect scope" }
