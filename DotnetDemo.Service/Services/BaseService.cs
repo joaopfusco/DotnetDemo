@@ -2,6 +2,7 @@
 using DotnetDemo.Repository.Data;
 using DotnetDemo.Service.Interfaces;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace DotnetDemo.Service.Services
 {
@@ -22,12 +23,12 @@ namespace DotnetDemo.Service.Services
                 .AsQueryable();
         }
 
-        public virtual int Insert(TModel model)
+        public virtual async Task<int> Insert(TModel model)
         {
             try
             {
-                _db.Add(model);
-                return _db.SaveChanges();
+                await _db.AddAsync(model);
+                return await _db.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -35,12 +36,12 @@ namespace DotnetDemo.Service.Services
             }
         }
 
-        public virtual int Update(TModel model)
+        public virtual async Task<int> Update(TModel model)
         {
             try
             {
                 _db.Update(model);
-                return _db.SaveChanges();
+                return await _db.SaveChangesAsync();
             }
             catch (Exception)
             {
@@ -48,13 +49,13 @@ namespace DotnetDemo.Service.Services
             }
         }
 
-        public virtual int Delete(int id)
+        public virtual async Task<int> Delete(int id)
         {
             try
             {
                 TModel model = Get(id).FirstOrDefault() ?? throw new Exception("Entity not found!");
-                _db.Remove(model);
-                return _db.SaveChanges();
+                _db.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+                return await _db.SaveChangesAsync();
             }
             catch (Exception)
             {

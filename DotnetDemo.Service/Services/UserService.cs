@@ -25,16 +25,16 @@ namespace DotnetDemo.Service.Services
             return _passwordHasher.HashPassword(user, user.Password);
         }
 
-        public override int Insert(User model)
+        public override async Task<int> Insert(User model)
         {
             model.Password = HashedPassword(model);
-            return base.Insert(model);
+            return await base.Insert(model);
         }
 
-        public override int Update(User model)
+        public override async Task<int> Update(User model)
         {
             model.Password = HashedPassword(model);
-            return base.Update(model);
+            return await base.Update(model);
         }
 
         public LoginResponse Authenticate(LoginPayload payload)
@@ -49,8 +49,8 @@ namespace DotnetDemo.Service.Services
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, _user.Username),
-            };
+                    new Claim(ClaimTypes.Name, _user.Username),
+                };
 
             var keyString = _configuration["Key"] ?? throw new Exception("Key not found in configuration");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));

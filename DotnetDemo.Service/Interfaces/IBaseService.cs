@@ -12,10 +12,10 @@ namespace DotnetDemo.Service.Interfaces
 
         IQueryable<TModel> Get(int id);
 
-        int Insert(TModel model);
+        Task<int> Insert(TModel model);
 
-        int Update(TModel model);
+        Task<int> Update(TModel model);
 
-        int Delete(int id);
+        Task<int> Delete(int id);
     }
 }

@@ -39,44 +39,45 @@ namespace DotnetDemo.API2.Controllers
         }
 
         [HttpPost]
-        public virtual IActionResult Post([FromBody] TModel model)
+        public virtual async Task<IActionResult> Post([FromBody] TModel model)
         {
-            return TryExecute(() =>
+            return await TryExecuteAsync(async () =>
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _service.Insert(model);
+                await _service.Insert(model);
                 return Ok(model);
             });
         }
 
         [HttpPut("{id}")]
-        public virtual IActionResult Put(int id, [FromBody] TModel model)
+        public virtual async Task<IActionResult> Put(int id, [FromBody] TModel model)
         {
-            return TryExecute(() =>
+            return await TryExecuteAsync(async () =>
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
                 model.Id = id;
-                _service.Update(model);
+                await _service.Update(model);
                 return Ok(model);
             });
         }
 
         [HttpDelete("{id}")]
-        public virtual IActionResult Delete(int id)
+        public virtual async Task<IActionResult> Delete(int id)
         {
-            return TryExecute(() =>
+            return await TryExecuteAsync(async () =>
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _service.Delete(id);
+                await _service.Delete(id);
                 return Ok(id);
             });
         }
+
 
         [NonAction]
         protected virtual IActionResult TryExecute(Func<IActionResult> execute)
@@ -91,5 +92,20 @@ namespace DotnetDemo.API2.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [NonAction]
+        protected virtual async Task<IActionResult> TryExecuteAsync(Func<Task<IActionResult>> execute)
+        {
+            try
+            {
+                return await execute();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message, ex.InnerException);
+                return BadRequest(ex);
+            }
+        }
+
     }
 }
