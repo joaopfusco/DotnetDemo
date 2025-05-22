@@ -2,6 +2,7 @@ using DotnetDemo.API2.Extensions;
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.Extensions.Logging;
@@ -61,6 +62,27 @@ namespace DotnetDemo.API2.Controllers
 
                 model.Id = id;
                 await _service.Update(model);
+                return Ok(model);
+            });
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult Patch(int id, [FromBody] JsonPatchDocument<TModel> patchDoc)
+        {
+            return TryExecute(() =>
+            {
+                if (patchDoc == null)
+                    return BadRequest();
+
+                var model = _service.Get(id).FirstOrDefault();
+                if (model == null)
+                    return NotFound();
+
+                patchDoc.ApplyTo(model, ModelState);
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
                 return Ok(model);
             });
         }
