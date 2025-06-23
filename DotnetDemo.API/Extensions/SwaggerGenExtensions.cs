@@ -20,6 +20,7 @@ namespace DotnetDemo.API.Extensions
                     BearerFormat = "JWT",
                     Scheme = "Bearer"
                 });
+
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {

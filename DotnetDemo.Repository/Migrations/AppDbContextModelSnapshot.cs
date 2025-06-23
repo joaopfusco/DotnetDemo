@@ -17,7 +17,7 @@ namespace DotnetDemo.Repository.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.2")
+                .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -36,6 +36,9 @@ namespace DotnetDemo.Repository.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
@@ -49,6 +52,9 @@ namespace DotnetDemo.Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("Username")
                         .IsUnique();
 
@@ -59,6 +65,7 @@ namespace DotnetDemo.Repository.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "root@email.com",
                             Password = "AQAAAAIAAYagAAAAEP8PG6clj/SvgE7ELzmTICj861gpD8wEbPAjmyep0KrHAqGyy9rqn+UrVlFlci1DAQ==",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Username = "root"

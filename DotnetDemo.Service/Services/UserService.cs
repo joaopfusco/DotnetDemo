@@ -37,22 +37,15 @@ namespace DotnetDemo.Service.Services
             return await base.Update(model);
         }
 
-        public LoginResponse Authenticate(LoginPayload payload)
+        private string GenerateToken(User user)
         {
-            var _user = Get(u => u.Username == payload.Username)
-                .FirstOrDefault() ?? throw new Exception("Usuário não existe!");
-
-            var verificationResult = _passwordHasher.VerifyHashedPassword(_user, _user.Password, payload.Password);
-
-            if (verificationResult != PasswordVerificationResult.Success)
-                throw new Exception("Usuário ou senha incorretos!");
-
             var claims = new[]
             {
-                    new Claim(ClaimTypes.Name, _user.Username),
-                };
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
+            };
 
-            var keyString = _configuration["Key"] ?? throw new Exception("Key not found in configuration");
+            var keyString = _configuration["JwtKey"] ?? throw new Exception("Key not found in configuration");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -61,11 +54,41 @@ namespace DotnetDemo.Service.Services
                 audience: null,
                 claims: claims,
                 expires: DateTime.Now.AddHours(5),
-                signingCredentials: creds);
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public LoginResponse Authenticate(LoginPayload payload)
+        {
+            var _user = Get(u => u.Email == payload.Email)
+                .FirstOrDefault() ?? throw new Exception("Usuário não existe!");
+
+            var verificationResult = _passwordHasher.VerifyHashedPassword(_user, _user.Password, payload.Password);
+
+            if (verificationResult != PasswordVerificationResult.Success)
+                throw new Exception("Usuário ou senha incorretos!");
+
+            var token = GenerateToken(_user);
 
             return new LoginResponse
             {
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Token = token,
+                User = _user,
+            };
+        }
+
+        public LoginResponse AuthenticateEmail(string email)
+        {
+            var _user = Get(u => u.Email == email)
+                .FirstOrDefault() ?? throw new Exception("Usuário não existe!");
+
+            var token = GenerateToken(_user);
+
+            return new LoginResponse
+            {
+                Token = token,
                 User = _user,
             };
         }

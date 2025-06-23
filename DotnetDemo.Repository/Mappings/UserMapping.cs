@@ -16,11 +16,13 @@ namespace DotnetDemo.Repository.Mappings
                 .HasIdentityOptions(startValue: 2);
 
             builder.HasIndex(x => new { x.Username }).IsUnique();
+            builder.HasIndex(x => new { x.Email }).IsUnique();
 
             builder.HasData(new User
             {
                 Id = 1,
                 Username = "root",
+                Email = "root@email.com",
                 Password = "AQAAAAIAAYagAAAAEP8PG6clj/SvgE7ELzmTICj861gpD8wEbPAjmyep0KrHAqGyy9rqn+UrVlFlci1DAQ==",
             });
 

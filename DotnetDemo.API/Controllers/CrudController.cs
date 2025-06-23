@@ -1,6 +1,6 @@
-using DotnetDemo.API2.Extensions;
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Service.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -8,14 +8,9 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace DotnetDemo.API2.Controllers
+namespace DotnetDemo.API.Controllers
 {
-#if !DEBUG
-    [Authorize]
-#endif
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BaseController<TModel>(IBaseService<TModel> service, ILogger logger) : Controller where TModel : BaseModel
+    public class CrudController<TModel>(IBaseService<TModel> service, ILogger logger) : BaseController(logger) where TModel : BaseModel
     {
         protected readonly IBaseService<TModel> _service = service;
         protected readonly ILogger _logger = logger;
@@ -99,35 +94,5 @@ namespace DotnetDemo.API2.Controllers
                 return Ok(id);
             });
         }
-
-
-        [NonAction]
-        protected virtual IActionResult TryExecute(Func<IActionResult> execute)
-        {
-            try
-            {
-                return execute();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message, ex.InnerException);
-                return BadRequest(ex);
-            }
-        }
-
-        [NonAction]
-        protected virtual async Task<IActionResult> TryExecuteAsync(Func<Task<IActionResult>> execute)
-        {
-            try
-            {
-                return await execute();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message, ex.InnerException);
-                return BadRequest(ex);
-            }
-        }
-
     }
 }

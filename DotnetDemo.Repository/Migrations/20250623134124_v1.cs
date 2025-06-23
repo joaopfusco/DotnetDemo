@@ -20,6 +20,7 @@ namespace DotnetDemo.Repository.Migrations
                         .Annotation("Npgsql:IdentitySequenceOptions", "'2', '1', '', '', 'False', '1'")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Username = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
                     Password = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
@@ -31,8 +32,14 @@ namespace DotnetDemo.Repository.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Password", "Username" },
-                values: new object[] { 1, "AQAAAAIAAYagAAAAEP8PG6clj/SvgE7ELzmTICj861gpD8wEbPAjmyep0KrHAqGyy9rqn+UrVlFlci1DAQ==", "root" });
+                columns: new[] { "Id", "Email", "Password", "Username" },
+                values: new object[] { 1, "root@email.com", "AQAAAAIAAYagAAAAEP8PG6clj/SvgE7ELzmTICj861gpD8wEbPAjmyep0KrHAqGyy9rqn+UrVlFlci1DAQ==", "root" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
