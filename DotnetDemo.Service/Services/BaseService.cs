@@ -10,14 +10,14 @@ namespace DotnetDemo.Service.Services
     {
         protected readonly AppDbContext _db = db;
 
-        public IQueryable<TModel> Get(Expression<Func<TModel, bool>>? predicate = null)
+        public virtual IQueryable<TModel> Get(Expression<Func<TModel, bool>>? predicate = null)
         {
             var query = _db.Set<TModel>().AsQueryable();
             if (predicate != null) query = query.Where(predicate);
             return query;
         }
 
-        public IQueryable<TModel> Get(int id)
+        public virtual IQueryable<TModel> Get(int id)
         {
             return Get(p => p.Id.Equals(id))
                 .AsQueryable();
