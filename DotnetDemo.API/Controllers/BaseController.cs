@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetDemo.API.Controllers
 {
-#if !DEBUG
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-#endif
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BaseController(ILogger logger) : Controller

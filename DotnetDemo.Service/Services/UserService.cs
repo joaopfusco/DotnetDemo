@@ -78,19 +78,5 @@ namespace DotnetDemo.Service.Services
                 User = _user,
             };
         }
-
-        public LoginResponse AuthenticateEmail(string email)
-        {
-            var _user = Get(u => u.Email == email)
-                .FirstOrDefault() ?? throw new Exception("Usuário não existe!");
-
-            var token = GenerateToken(_user);
-
-            return new LoginResponse
-            {
-                Token = token,
-                User = _user,
-            };
-        }
     }
 }

@@ -4,7 +4,6 @@ using DotnetDemo.Service.Interfaces;
 using DotnetDemo.Service.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Formatter;
@@ -27,40 +26,6 @@ namespace DotnetDemo.API.Controllers
             {
                 var response = service.Authenticate(payload);
                 return Ok(response);
-            });
-        }
-
-        [HttpGet("[action]")]
-        public IActionResult LoginExternal()
-        {
-            return TryExecute(() =>
-            {
-                return Challenge(new AuthenticationProperties
-                {
-                    RedirectUri = "/api/Auth/LoginCallback"
-                }, OpenIdConnectDefaults.AuthenticationScheme);
-            });
-        }
-
-        [HttpGet("[action]")]
-        public async Task<IActionResult> LoginCallback()
-        {
-            return await TryExecuteAsync(async () =>
-            {
-                var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-                if (result.Succeeded)
-                {
-                    var claims = result.Principal.Claims;
-                    var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-                    if (email == null)
-                        return Unauthorized();
-
-                    var response = service.AuthenticateEmail(email);
-                    return Ok(response);
-                }
-
-                return Unauthorized();
             });
         }
     }

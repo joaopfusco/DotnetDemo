@@ -6,6 +6,5 @@ namespace DotnetDemo.Service.Interfaces
     public interface IUserService : IBaseService<User>
     {
         LoginResponse Authenticate(LoginPayload payload);
-        LoginResponse AuthenticateEmail(string email);
     }
 }
