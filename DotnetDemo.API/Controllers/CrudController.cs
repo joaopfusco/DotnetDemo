@@ -62,7 +62,7 @@ namespace DotnetDemo.API.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, [FromBody] JsonPatchDocument<TModel> patchDoc)
+        public virtual IActionResult Patch(int id, [FromBody] JsonPatchDocument<TModel> patchDoc)
         {
             return TryExecute(() =>
             {
