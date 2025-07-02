@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Repository.Mappings;
@@ -26,10 +24,12 @@ namespace DotnetDemo.Repository.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserPassword> UserPasswords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMapping());
+            modelBuilder.ApplyConfiguration(new UserPasswordMapping());
 
             base.OnModelCreating(modelBuilder);
         }

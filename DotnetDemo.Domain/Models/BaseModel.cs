@@ -1,5 +1,4 @@
 using DotnetDemo.Domain.Interfaces;
-using System;
 using System.Text.Json.Serialization;
 
 namespace DotnetDemo.Domain.Models

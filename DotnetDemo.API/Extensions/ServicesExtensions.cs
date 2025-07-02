@@ -8,6 +8,7 @@ namespace DotnetDemo.API.Extensions
         internal static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserPasswordService, UserPasswordService>();
 
             return services;
         }

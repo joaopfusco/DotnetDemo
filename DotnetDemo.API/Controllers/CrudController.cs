@@ -1,12 +1,8 @@
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Service.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
-using Microsoft.Extensions.Logging;
-using System.Net;
 
 namespace DotnetDemo.API.Controllers
 {

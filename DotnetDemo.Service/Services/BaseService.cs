@@ -2,7 +2,6 @@
 using DotnetDemo.Repository.Data;
 using DotnetDemo.Service.Interfaces;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace DotnetDemo.Service.Services
 {

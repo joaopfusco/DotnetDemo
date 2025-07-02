@@ -1,9 +1,6 @@
 ﻿using DotnetDemo.Domain.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace DotnetDemo.Repository.Mappings
 {
@@ -15,6 +12,9 @@ namespace DotnetDemo.Repository.Mappings
                 .UseIdentityColumn()
                 .HasIdentityOptions(startValue: 2);
 
+            builder.Property(x => x.Username).IsRequired();
+            builder.Property(x => x.Email).IsRequired();
+
             builder.HasIndex(x => new { x.Username }).IsUnique();
             builder.HasIndex(x => new { x.Email }).IsUnique();
 
@@ -23,7 +23,6 @@ namespace DotnetDemo.Repository.Mappings
                 Id = 1,
                 Username = "root",
                 Email = "root@email.com",
-                Password = "AQAAAAIAAYagAAAAEP8PG6clj/SvgE7ELzmTICj861gpD8wEbPAjmyep0KrHAqGyy9rqn+UrVlFlci1DAQ==",
             });
 
             base.Configure(builder);

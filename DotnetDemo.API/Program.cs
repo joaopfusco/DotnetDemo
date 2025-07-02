@@ -1,18 +1,11 @@
 using DotnetDemo.API.Extensions;
 using DotnetDemo.Repository.Data;
-using DotnetDemo.Service.Interfaces;
-using DotnetDemo.Service.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Text;
 
 #nullable disable
