@@ -6,7 +6,7 @@ namespace DotnetDemo.API.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class BaseController(ILogger logger) : Controller
+    public class BaseController(ILogger logger) : ControllerBase
     {
         private readonly ILogger _logger = logger;
 
