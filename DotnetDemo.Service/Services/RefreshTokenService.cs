@@ -32,10 +32,10 @@ namespace DotnetDemo.Service.Services
         {
             var storedToken = Get(t => t.Token == refreshToken)
                 .FirstOrDefault()
-                ?? throw new Exception("Refresh token inválido!");
+                ?? throw new Exception("Invalid refresh token");
 
             if (storedToken.IsUsed || storedToken.IsRevoked || storedToken.ExpiresAt < DateTime.UtcNow)
-                throw new Exception("Refresh token inválido ou expirado!");
+                throw new Exception("Invalid or expired refresh token");
 
             storedToken.IsUsed = true;
             await Update(storedToken);

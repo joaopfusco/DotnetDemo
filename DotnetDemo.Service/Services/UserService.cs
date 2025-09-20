@@ -43,15 +43,15 @@ namespace DotnetDemo.Service.Services
         public async Task<LoginResponse> Authenticate(LoginPayload payload)
         {
             var user = Get(u => u.Email == payload.Credential || u.Username == payload.Credential)
-                .FirstOrDefault() ?? throw new Exception("Usuário não existe!");
+                .FirstOrDefault() ?? throw new Exception("Invalid credentials");
 
             var userPassword = _userPasswordService.Get(up => up.UserId == user.Id)
                 .OrderByDescending(up => up.CreatedAt)
-                .FirstOrDefault() ?? throw new Exception("Usuário não possui senha!");
+                .FirstOrDefault() ?? throw new Exception("Invalid credentials");
 
             var verificationResult = _userPasswordService.VerifyPassword(userPassword, payload.Password);
             if (!verificationResult)
-                throw new Exception("Senha incorreta!");
+                throw new Exception("Invalid credentials");
 
             var accessToken = GenerateAccessToken(user);
             var refreshToken = await _refreshTokenService.GenerateRefreshToken(user.Id);

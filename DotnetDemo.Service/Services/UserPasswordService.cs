@@ -22,7 +22,7 @@ namespace DotnetDemo.Service.Services
 
         public override Task<int> Update(UserPassword model)
         {
-            throw new Exception("Ação inválida!");
+            throw new Exception("Invalid action");
         }
 
         public bool VerifyPassword(UserPassword userPassword, string password)

@@ -87,7 +87,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Ocorreu um erro ao atualizar o banco de dados.");
+        logger.LogError(ex, "An error occurred while updating the database");
     }
 }
 
