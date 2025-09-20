@@ -10,9 +10,6 @@ namespace DotnetDemo.Repository.Mappings
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Id)
-                .UseIdentityColumn();
-
             builder.Property(x => x.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
 

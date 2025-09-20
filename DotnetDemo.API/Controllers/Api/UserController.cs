@@ -1,8 +1,9 @@
+using DotnetDemo.API.Controllers.Shared;
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotnetDemo.API.Controllers
+namespace DotnetDemo.API.Controllers.Api
 {
     public class UserController(IUserService service, ILogger<UserController> logger) : CrudController<User>(service, logger)
     {

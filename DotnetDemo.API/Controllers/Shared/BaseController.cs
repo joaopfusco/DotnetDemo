@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotnetDemo.API.Controllers
+namespace DotnetDemo.API.Controllers.Shared
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class BaseController(ILogger logger) : ControllerBase
     {
         private readonly ILogger _logger = logger;

@@ -7,12 +7,12 @@ namespace DotnetDemo.Service.Interfaces
     {
         IQueryable<TModel> Get(Expression<Func<TModel, bool>>? predicate = null);
 
-        IQueryable<TModel> Get(int id);
+        IQueryable<TModel> Get(Guid id);
 
         Task<int> Insert(TModel model);
 
         Task<int> Update(TModel model);
 
-        Task<int> Delete(int id);
+        Task<int> Delete(Guid id);
     }
 }

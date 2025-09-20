@@ -16,10 +16,9 @@ namespace DotnetDemo.Service.Services
             return query;
         }
 
-        public virtual IQueryable<TModel> Get(int id)
+        public virtual IQueryable<TModel> Get(Guid id)
         {
-            return Get(p => p.Id.Equals(id))
-                .AsQueryable();
+            return Get(p => p.Id.Equals(id));
         }
 
         public virtual async Task<int> Insert(TModel model)
@@ -48,7 +47,7 @@ namespace DotnetDemo.Service.Services
             }
         }
 
-        public virtual async Task<int> Delete(int id)
+        public virtual async Task<int> Delete(Guid id)
         {
             try
             {

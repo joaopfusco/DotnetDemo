@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 
-namespace DotnetDemo.API.Controllers
+namespace DotnetDemo.API.Controllers.Shared
 {
     public class CrudController<TModel>(IBaseService<TModel> service, ILogger logger) : BaseController(logger) where TModel : BaseModel
     {
@@ -22,7 +22,7 @@ namespace DotnetDemo.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public virtual IActionResult GetById(int id)
+        public virtual IActionResult GetById(Guid id)
         {
             return TryExecute(() =>
             {
@@ -44,7 +44,7 @@ namespace DotnetDemo.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<IActionResult> Put(int id, [FromBody] TModel model)
+        public virtual async Task<IActionResult> Put(Guid id, [FromBody] TModel model)
         {
             return await TryExecuteAsync(async () =>
             {
@@ -58,7 +58,7 @@ namespace DotnetDemo.API.Controllers
         }
 
         [HttpPatch("{id}")]
-        public virtual IActionResult Patch(int id, [FromBody] JsonPatchDocument<TModel> patchDoc)
+        public virtual IActionResult Patch(Guid id, [FromBody] JsonPatchDocument<TModel> patchDoc)
         {
             return TryExecute(() =>
             {
@@ -79,7 +79,7 @@ namespace DotnetDemo.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<IActionResult> Delete(int id)
+        public virtual async Task<IActionResult> Delete(Guid id)
         {
             return await TryExecuteAsync(async () =>
             {

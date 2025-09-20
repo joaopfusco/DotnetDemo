@@ -3,10 +3,10 @@ using System.Text.Json.Serialization;
 
 namespace DotnetDemo.Domain.Models
 {
-    public class BaseModel : IBaseModel<int>
+    public class BaseModel : IBaseModel<Guid>
     {
         [JsonIgnore]
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }

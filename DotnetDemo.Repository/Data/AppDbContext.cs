@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Repository.Mappings;
+using DotnetDemo.Repository.Seeds;
 
 namespace DotnetDemo.Repository.Data
 {
@@ -25,11 +26,15 @@ namespace DotnetDemo.Repository.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserPassword> UserPasswords { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMapping());
             modelBuilder.ApplyConfiguration(new UserPasswordMapping());
+            modelBuilder.ApplyConfiguration(new RefreshTokenMapping());
+
+            UserSeeder.Seed(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }

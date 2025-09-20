@@ -4,7 +4,7 @@ namespace DotnetDemo.Service.DTOs
 {
     public class LoginResponse
     {
-        public required string Token { get; set; }
-        public required User User { get; set; }
+        public required string AccessToken { get; set; }
+        public required string RefreshToken { get; set; }
     }
 }

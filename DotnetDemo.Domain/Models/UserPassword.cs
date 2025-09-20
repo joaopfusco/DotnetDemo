@@ -6,7 +6,7 @@ namespace DotnetDemo.Domain.Models
     {
         public string Password { get; set; }
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [JsonIgnore]
         public User User { get; set; }

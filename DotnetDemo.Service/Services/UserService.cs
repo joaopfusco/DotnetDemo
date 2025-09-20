@@ -11,12 +11,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotnetDemo.Service.Services
 {
-    public class UserService(AppDbContext db, IConfiguration configuration, IUserPasswordService userPasswordService) : BaseService<User>(db), IUserService
+    public class UserService(AppDbContext db, IConfiguration configuration, IUserPasswordService userPasswordService, IRefreshTokenService refreshTokenService) : BaseService<User>(db), IUserService
     {
         private readonly IConfiguration _configuration = configuration;
         private readonly IUserPasswordService _userPasswordService = userPasswordService;
+        private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
 
-        private string GenerateToken(User user)
+        private string GenerateAccessToken(User user)
         {
             var claims = new[]
             {
@@ -39,7 +40,7 @@ namespace DotnetDemo.Service.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public LoginResponse Authenticate(LoginPayload payload)
+        public async Task<LoginResponse> Authenticate(LoginPayload payload)
         {
             var user = Get(u => u.Email == payload.Credential || u.Username == payload.Credential)
                 .FirstOrDefault() ?? throw new Exception("Usuário não existe!");
@@ -52,12 +53,27 @@ namespace DotnetDemo.Service.Services
             if (!verificationResult)
                 throw new Exception("Senha incorreta!");
 
-            var token = GenerateToken(user);
-            user.UserPasswords = null;
+            var accessToken = GenerateAccessToken(user);
+            var refreshToken = await _refreshTokenService.GenerateRefreshToken(user.Id);
             return new LoginResponse
             {
-                Token = token,
-                User = user,
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+            };
+        }
+
+        public async Task<LoginResponse> Refresh(string refreshToken)
+        {
+            var refreshed = await _refreshTokenService.RefreshToken(refreshToken);
+            var user = Get(refreshed.UserId)
+                .FirstOrDefault() ?? throw new Exception("Usuário não encontrado!"); ;
+
+            var newAccessToken = GenerateAccessToken(user);
+            var newRefreshToken = refreshed.RefreshToken;
+            return new LoginResponse
+            {
+                AccessToken = newAccessToken,
+                RefreshToken = newRefreshToken
             };
         }
     }

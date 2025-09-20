@@ -9,6 +9,7 @@ namespace DotnetDemo.API.Extensions
         {
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserPasswordService, UserPasswordService>();
+            services.AddTransient<IRefreshTokenService, RefreshTokenService>();
 
             return services;
         }
