@@ -36,9 +36,6 @@ namespace DotnetDemo.Repository.Migrations
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Identifier")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsRevoked")
                         .HasColumnType("boolean");
 

@@ -43,7 +43,7 @@ namespace DotnetDemo.Service.Services
 
             await Insert(refreshToken);
 
-            return $"{refreshToken.Identifier}:{token}";
+            return $"{refreshToken.Id}:{token}";
         }
 
         public async Task<Refreshed> RefreshToken(string token)
@@ -51,10 +51,10 @@ namespace DotnetDemo.Service.Services
             var parts = token.Split(':');
             if (parts.Length != 2) throw new Exception("Invalid token format");
 
-            var identifier = parts[0];
+            var id = Guid.Parse(parts[0]);
             var secret = parts[1];
 
-            var storedToken = Get(t => t.Identifier == identifier)
+            var storedToken = Get(t => t.Id == id)
                 .FirstOrDefault()
                 ?? throw new Exception("Invalid refresh token");
 
