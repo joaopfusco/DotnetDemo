@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotnetDemo.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250920173436_v1")]
+    [Migration("20250920181622_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -38,6 +38,9 @@ namespace DotnetDemo.Repository.Migrations
 
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Identifier")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsRevoked")
                         .HasColumnType("boolean");

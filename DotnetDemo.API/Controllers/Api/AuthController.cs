@@ -1,4 +1,4 @@
-using DotnetDemo.API.Controllers.Shared;
+using DotnetDemo.API.Controllers.Abstracts;
 using DotnetDemo.Service.DTOs;
 using DotnetDemo.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;

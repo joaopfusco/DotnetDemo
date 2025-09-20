@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 
-namespace DotnetDemo.API.Controllers.Shared
+namespace DotnetDemo.API.Controllers.Abstracts
 {
     public class CrudController<TModel>(IBaseService<TModel> service, ILogger logger) : BaseController(logger) where TModel : BaseModel
     {

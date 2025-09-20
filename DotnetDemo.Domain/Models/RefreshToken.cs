@@ -2,12 +2,17 @@
 
 namespace DotnetDemo.Domain.Models
 {
-    public class User : BaseModel
+    public class RefreshToken : BaseModel
     {
-        public string Username { get; set; }
-        public string Email { get; set; }
+        public string Token { get; set; }
+        public string Identifier { get; set; } = Guid.NewGuid().ToString();
+        public DateTime ExpiresAt { get; set; }
+        public bool IsRevoked { get; set; }
+        public bool IsUsed { get; set; }
+
+        public Guid UserId { get; set; }
 
         [JsonIgnore]
-        public ICollection<UserPassword> UserPasswords { get; set; }
+        public User User { get; set; }
     }
 }

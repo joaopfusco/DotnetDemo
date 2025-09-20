@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotnetDemo.API.Controllers.Shared
+namespace DotnetDemo.API.Controllers.Abstracts
 {
     [Authorize]
     [ApiController]

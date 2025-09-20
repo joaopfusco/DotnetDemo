@@ -1,4 +1,4 @@
-using DotnetDemo.API.Controllers.Shared;
+using DotnetDemo.API.Controllers.Abstracts;
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Service.Interfaces;
 

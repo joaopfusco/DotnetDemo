@@ -9,14 +9,14 @@ namespace DotnetDemo.Service.Services
     {
         private readonly PasswordHasher<UserPassword> _passwordHasher = new();
 
-        public string HashedPassword(UserPassword model)
+        private string HashPassword(UserPassword model, string password)
         {
-            return _passwordHasher.HashPassword(model, model.Password);
+            return _passwordHasher.HashPassword(model, password);
         }
 
         public override async Task<int> Insert(UserPassword model)
         {
-            model.Password = HashedPassword(model);
+            model.Password = HashPassword(model, model.Password);
             return await base.Insert(model);
         }
 

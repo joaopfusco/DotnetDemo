@@ -1,4 +1,5 @@
 ﻿using DotnetDemo.Domain.Models;
+using DotnetDemo.Service.DTOs;
 using DotnetDemo.Service.Services;
 
 namespace DotnetDemo.Service.Interfaces
