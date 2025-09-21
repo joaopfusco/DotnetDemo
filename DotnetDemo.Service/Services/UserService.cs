@@ -21,6 +21,7 @@ namespace DotnetDemo.Service.Services
         {
             var claims = new[]
             {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
             };
