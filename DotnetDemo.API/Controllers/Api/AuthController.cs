@@ -1,5 +1,5 @@
 using DotnetDemo.API.Controllers.Abstracts;
-using DotnetDemo.Service.DTOs;
+using DotnetDemo.Service.Dtos;
 using DotnetDemo.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

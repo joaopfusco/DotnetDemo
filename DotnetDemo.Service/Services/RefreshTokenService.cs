@@ -1,6 +1,6 @@
 ﻿using DotnetDemo.Domain.Models;
 using DotnetDemo.Repository.Data;
-using DotnetDemo.Service.DTOs;
+using DotnetDemo.Service.Dtos;
 using DotnetDemo.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

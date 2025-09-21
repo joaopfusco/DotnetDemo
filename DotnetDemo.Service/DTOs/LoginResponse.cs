@@ -1,6 +1,6 @@
 ﻿using DotnetDemo.Domain.Models;
 
-namespace DotnetDemo.Service.DTOs
+namespace DotnetDemo.Service.Dtos
 {
     public class LoginResponse
     {

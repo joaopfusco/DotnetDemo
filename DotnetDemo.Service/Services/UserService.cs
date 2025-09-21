@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using DotnetDemo.Service.Interfaces;
 using DotnetDemo.Repository.Data;
 using DotnetDemo.Domain.Models;
-using DotnetDemo.Service.DTOs;
+using DotnetDemo.Service.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotnetDemo.Service.Services

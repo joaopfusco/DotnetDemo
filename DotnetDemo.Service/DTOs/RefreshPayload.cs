@@ -1,4 +1,4 @@
-﻿namespace DotnetDemo.Service.DTOs
+﻿namespace DotnetDemo.Service.Dtos
 {
     public class RefreshPayload
     {
