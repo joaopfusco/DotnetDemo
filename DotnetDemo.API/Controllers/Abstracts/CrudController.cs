@@ -1,15 +1,32 @@
 using DotnetDemo.Domain.Models;
 using DotnetDemo.Service.Interfaces;
+using FluentValidation;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 
 namespace DotnetDemo.API.Controllers.Abstracts
 {
-    public class CrudController<TModel>(IBaseService<TModel> service, ILogger logger) : BaseController(logger) where TModel : BaseModel
+    public class CrudController<TModel>(IBaseService<TModel> service, IValidator<TModel> validator, ILogger logger) : BaseController(logger) where TModel : BaseModel
     {
         protected readonly IBaseService<TModel> _service = service;
+        protected readonly IValidator<TModel> _validator = validator;
         protected readonly ILogger _logger = logger;
+
+        [NonAction]
+        protected async Task<IActionResult?> ValidateModelAsync(TModel model)
+        {
+            var result = await _validator.ValidateAsync(model);
+            if (!result.IsValid)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return BadRequest(ModelState);
+            }
+            return null;
+        }
 
         [EnableQuery]
         [HttpGet]
@@ -35,8 +52,8 @@ namespace DotnetDemo.API.Controllers.Abstracts
         {
             return await TryExecuteAsync(async () =>
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                var validationError = await ValidateModelAsync(model);
+                if (validationError != null) return validationError;
 
                 await _service.Insert(model);
                 return Ok(model);
@@ -48,32 +65,11 @@ namespace DotnetDemo.API.Controllers.Abstracts
         {
             return await TryExecuteAsync(async () =>
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                var validationError = await ValidateModelAsync(model);
+                if (validationError != null) return validationError;
 
                 model.Id = id;
                 await _service.Update(model);
-                return Ok(model);
-            });
-        }
-
-        [HttpPatch("{id}")]
-        public virtual IActionResult Patch(Guid id, [FromBody] JsonPatchDocument<TModel> patchDoc)
-        {
-            return TryExecute(() =>
-            {
-                if (patchDoc == null)
-                    return BadRequest();
-
-                var model = _service.Get(id).FirstOrDefault();
-                if (model == null)
-                    return NotFound();
-
-                patchDoc.ApplyTo(model, ModelState);
-
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 return Ok(model);
             });
         }
@@ -83,9 +79,6 @@ namespace DotnetDemo.API.Controllers.Abstracts
         {
             return await TryExecuteAsync(async () =>
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 await _service.Delete(id);
                 return Ok(id);
             });

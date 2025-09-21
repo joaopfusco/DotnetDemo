@@ -59,6 +59,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.ConfigureServices();
+builder.Services.AddValidators();
 
 builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
 

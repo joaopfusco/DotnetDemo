@@ -132,14 +132,9 @@ namespace DotnetDemo.Repository.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("UserPasswords");
 
@@ -168,14 +163,10 @@ namespace DotnetDemo.Repository.Migrations
             modelBuilder.Entity("DotnetDemo.Domain.Models.UserPassword", b =>
                 {
                     b.HasOne("DotnetDemo.Domain.Models.User", "User")
-                        .WithMany()
+                        .WithMany("UserPasswords")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("DotnetDemo.Domain.Models.User", null)
-                        .WithMany("UserPasswords")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });

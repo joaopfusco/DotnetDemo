@@ -57,7 +57,6 @@ namespace DotnetDemo.Repository.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId1 = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
@@ -70,11 +69,6 @@ namespace DotnetDemo.Repository.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserPasswords_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -84,8 +78,8 @@ namespace DotnetDemo.Repository.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserPasswords",
-                columns: new[] { "Id", "Password", "UserId", "UserId1" },
-                values: new object[] { new Guid("beee1b0c-9012-4c89-885e-d0e20f51d71d"), "AQAAAAIAAYagAAAAEMRXoBWD0dV14KPMfTS7/OHrK/3OqmT2yvV0nvDFenlQOw7X3wLD3DdBkkMP3SGVFw==", new Guid("f5ff2843-ff7e-454e-9c79-512e5bbfac7c"), null });
+                columns: new[] { "Id", "Password", "UserId" },
+                values: new object[] { new Guid("beee1b0c-9012-4c89-885e-d0e20f51d71d"), "AQAAAAIAAYagAAAAEMRXoBWD0dV14KPMfTS7/OHrK/3OqmT2yvV0nvDFenlQOw7X3wLD3DdBkkMP3SGVFw==", new Guid("f5ff2843-ff7e-454e-9c79-512e5bbfac7c") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_Token",
@@ -102,11 +96,6 @@ namespace DotnetDemo.Repository.Migrations
                 name: "IX_UserPasswords_UserId",
                 table: "UserPasswords",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserPasswords_UserId1",
-                table: "UserPasswords",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
