@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetDemo.API.Controllers.Api
 {
-    public class UserController(IUserService service, IValidator<User> validator, ILogger<UserController> logger) : CrudController<User>(service, validator, logger)
+    public class UserController(IUserService service, IValidator<User> validator, ILogger<UserController> logger) 
+        : CrudController<User>(service, validator, logger)
     {
         [HttpGet("[action]")]
         public IActionResult Me()

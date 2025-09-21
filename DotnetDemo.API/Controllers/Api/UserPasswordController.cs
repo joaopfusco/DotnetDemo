@@ -5,7 +5,8 @@ using FluentValidation;
 
 namespace DotnetDemo.API.Controllers.Api
 {
-    public class UserPasswordController(IUserPasswordService service, IValidator<UserPassword> validator, ILogger<UserPasswordController> logger) : CrudController<UserPassword>(service, validator, logger)
+    public class UserPasswordController(IUserPasswordService service, IValidator<UserPassword> validator, ILogger<UserPasswordController> logger) 
+        : CrudController<UserPassword>(service, validator, logger)
     {
     }
 }
