@@ -12,7 +12,7 @@ namespace DotnetDemo.Repository.Mappings
 
             builder
                 .HasOne(x => x.User)
-                .WithMany(y => y.UserPasswords)
+                .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 

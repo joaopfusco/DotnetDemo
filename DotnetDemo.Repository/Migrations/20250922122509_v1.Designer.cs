@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotnetDemo.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250921203011_v1")]
+    [Migration("20250922122509_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -166,17 +166,12 @@ namespace DotnetDemo.Repository.Migrations
             modelBuilder.Entity("DotnetDemo.Domain.Models.UserPassword", b =>
                 {
                     b.HasOne("DotnetDemo.Domain.Models.User", "User")
-                        .WithMany("UserPasswords")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DotnetDemo.Domain.Models.User", b =>
-                {
-                    b.Navigation("UserPasswords");
                 });
 #pragma warning restore 612, 618
         }

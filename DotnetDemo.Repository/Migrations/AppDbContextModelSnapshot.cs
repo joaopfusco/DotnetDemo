@@ -163,17 +163,12 @@ namespace DotnetDemo.Repository.Migrations
             modelBuilder.Entity("DotnetDemo.Domain.Models.UserPassword", b =>
                 {
                     b.HasOne("DotnetDemo.Domain.Models.User", "User")
-                        .WithMany("UserPasswords")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DotnetDemo.Domain.Models.User", b =>
-                {
-                    b.Navigation("UserPasswords");
                 });
 #pragma warning restore 612, 618
         }

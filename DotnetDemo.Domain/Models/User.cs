@@ -6,8 +6,5 @@ namespace DotnetDemo.Domain.Models
     {
         public string Username { get; set; }
         public string Email { get; set; }
-
-        [JsonIgnore]
-        public ICollection<UserPassword> UserPasswords { get; set; }
     }
 }
