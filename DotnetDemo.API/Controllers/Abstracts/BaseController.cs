@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetDemo.API.Controllers.Abstracts
 {
+#if !DEBUG
     [Authorize]
+#endif
     [ApiController]
     [Route("api/[controller]")]
     public class BaseController(ILogger logger) : ControllerBase
