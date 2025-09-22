@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetDemo.API.Controllers.Abstracts
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BaseController(ILogger logger) : ControllerBase
     {
         private readonly ILogger _logger = logger;
